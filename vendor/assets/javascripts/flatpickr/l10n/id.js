@@ -49,7 +49,7 @@
           return "";
       },
       time_24hr: true,
-      rangeSeparator: ' - '
+      rangeSeparator: " - "
   };
   fp.l10ns.id = Indonesian;
   var id = fp.l10ns;

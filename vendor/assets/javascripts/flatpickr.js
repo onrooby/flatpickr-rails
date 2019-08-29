@@ -1,4 +1,4 @@
-/* flatpickr v4.6.1, @license MIT */
+/* flatpickr v4.6.2, @license MIT */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -90,6 +90,7 @@
         locale: "default",
         minuteIncrement: 5,
         mode: "single",
+        monthSelectorType: "dropdown",
         nextArrow: "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 17 17'><g></g><path d='M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z' /></svg>",
         noCalendar: false,
         now: new Date(),
@@ -183,6 +184,8 @@
         toggleTitle: "Click to toggle",
         amPM: ["AM", "PM"],
         yearAriaLabel: "Year",
+        hourAriaLabel: "Hour",
+        minuteAriaLabel: "Minute",
         time_24hr: false
     };
 
@@ -1145,7 +1148,8 @@
             }
         }
         function buildMonthSwitch() {
-            if (self.config.showMonths > 1)
+            if (self.config.showMonths > 1 ||
+                self.config.monthSelectorType !== "dropdown")
                 return;
             var shouldBuildMonth = function (month) {
                 if (self.config.minDate !== undefined &&
@@ -1164,7 +1168,7 @@
                     continue;
                 var month = createElement("option", "flatpickr-monthDropdown-month");
                 month.value = new Date(self.currentYear, i).getMonth().toString();
-                month.textContent = monthToStr(i, false, self.l10n);
+                month.textContent = monthToStr(i, self.config.shorthandCurrentMonth, self.l10n);
                 month.tabIndex = -1;
                 if (self.currentMonth === i) {
                     month.selected = true;
@@ -1176,7 +1180,8 @@
             var container = createElement("div", "flatpickr-month");
             var monthNavFragment = window.document.createDocumentFragment();
             var monthElement;
-            if (self.config.showMonths > 1) {
+            if (self.config.showMonths > 1 ||
+                self.config.monthSelectorType === "static") {
                 monthElement = createElement("span", "cur-month");
             }
             else {
@@ -1266,9 +1271,13 @@
             self.timeContainer = createElement("div", "flatpickr-time");
             self.timeContainer.tabIndex = -1;
             var separator = createElement("span", "flatpickr-time-separator", ":");
-            var hourInput = createNumberInput("flatpickr-hour");
+            var hourInput = createNumberInput("flatpickr-hour", {
+                "aria-label": self.l10n.hourAriaLabel
+            });
             self.hourElement = hourInput.getElementsByTagName("input")[0];
-            var minuteInput = createNumberInput("flatpickr-minute");
+            var minuteInput = createNumberInput("flatpickr-minute", {
+                "aria-label": self.l10n.minuteAriaLabel
+            });
             self.minuteElement = minuteInput.getElementsByTagName("input")[0];
             self.hourElement.tabIndex = self.minuteElement.tabIndex = -1;
             self.hourElement.value = pad(self.latestSelectedDateObj
@@ -2197,7 +2206,8 @@
                 return self.clear(triggerChange);
             setSelectedDate(date, format);
             self.showTimeInput = self.selectedDates.length > 0;
-            self.latestSelectedDateObj = self.selectedDates[self.selectedDates.length - 1];
+            self.latestSelectedDateObj =
+                self.selectedDates[self.selectedDates.length - 1];
             self.redraw();
             jumpToDate();
             setHoursFromDate();
@@ -2395,7 +2405,8 @@
             self.yearElements.forEach(function (yearElement, i) {
                 var d = new Date(self.currentYear, self.currentMonth, 1);
                 d.setMonth(self.currentMonth + i);
-                if (self.config.showMonths > 1) {
+                if (self.config.showMonths > 1 ||
+                    self.config.monthSelectorType === "static") {
                     self.monthElements[i].textContent =
                         monthToStr(d.getMonth(), self.config.shorthandCurrentMonth, self.l10n) + " ";
                 }

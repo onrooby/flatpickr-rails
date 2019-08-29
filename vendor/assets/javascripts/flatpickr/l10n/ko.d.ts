@@ -33,6 +33,7 @@ declare const _default: {
     is?: CustomLocale | undefined;
     it?: CustomLocale | undefined;
     ja?: CustomLocale | undefined;
+    ka?: CustomLocale | undefined;
     ko?: CustomLocale | undefined;
     km?: CustomLocale | undefined;
     kz?: CustomLocale | undefined;

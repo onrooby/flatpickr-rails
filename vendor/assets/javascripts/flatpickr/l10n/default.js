@@ -70,6 +70,8 @@
       toggleTitle: "Click to toggle",
       amPM: ["AM", "PM"],
       yearAriaLabel: "Year",
+      hourAriaLabel: "Hour",
+      minuteAriaLabel: "Minute",
       time_24hr: false
   };
 

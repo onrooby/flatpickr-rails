@@ -53,7 +53,7 @@
           ]
       },
       firstDayOfWeek: 1,
-      rangeSeparator: ' đến '
+      rangeSeparator: " đến "
   };
   fp.l10ns.vn = Vietnamese;
   var vn = fp.l10ns;

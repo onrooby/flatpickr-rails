@@ -117,6 +117,7 @@
       locale: "default",
       minuteIncrement: 5,
       mode: "single",
+      monthSelectorType: "dropdown",
       nextArrow: "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 17 17'><g></g><path d='M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z' /></svg>",
       noCalendar: false,
       now: new Date(),
@@ -210,6 +211,8 @@
       toggleTitle: "Click to toggle",
       amPM: ["AM", "PM"],
       yearAriaLabel: "Year",
+      hourAriaLabel: "Hour",
+      minuteAriaLabel: "Minute",
       time_24hr: false
   };
 

@@ -49,11 +49,12 @@
                     return;
                 fp.rContainer.removeChild(fp.daysContainer);
                 fp.rContainer.removeChild(fp.weekdayContainer);
-                fp.monthElements.forEach(function (element) {
+                for (var index = 0; index < fp.monthElements.length; index++) {
+                    var element = fp.monthElements[index];
                     if (!element.parentNode)
-                        return;
+                        continue;
                     element.parentNode.removeChild(element);
-                });
+                }
             }
             function addListeners() {
                 fp._bind(fp.prevMonthNav, "click", function () {
@@ -75,7 +76,7 @@
                     var month = fp._createElement("span", "flatpickr-monthSelect-month");
                     month.dateObj = new Date(fp.currentYear, i);
                     month.$i = i;
-                    month.textContent = monthToStr(i, config.shorthand === true, fp.l10n);
+                    month.textContent = monthToStr(i, config.shorthand, fp.l10n);
                     month.tabIndex = -1;
                     month.addEventListener("click", selectMonth);
                     self.monthsContainer.appendChild(month);
@@ -86,9 +87,9 @@
                 if (!fp.rContainer)
                     return;
                 var currentlySelected = fp.rContainer.querySelectorAll(".flatpickr-monthSelect-month.selected");
-                currentlySelected.forEach(function (month) {
-                    month.classList.remove("selected");
-                });
+                for (var index = 0; index < currentlySelected.length; index++) {
+                    currentlySelected[index].classList.remove("selected");
+                }
                 var month = fp.rContainer.querySelector(".flatpickr-monthSelect-month:nth-child(" + (fp.currentMonth + 1) + ")");
                 if (month) {
                     month.classList.add("selected");
@@ -141,11 +142,10 @@
             }
             function destroyPluginInstance() {
                 if (self.monthsContainer !== null) {
-                    self.monthsContainer
-                        .querySelectorAll(".flatpickr-monthSelect-month")
-                        .forEach(function (element) {
-                        element.removeEventListener("click", selectMonth);
-                    });
+                    var months = self.monthsContainer.querySelectorAll(".flatpickr-monthSelect-month");
+                    for (var index = 0; index < months.length; index++) {
+                        months[index].removeEventListener("click", selectMonth);
+                    }
                 }
             }
             return {
